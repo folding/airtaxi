@@ -45,8 +45,16 @@
 //
 //					ver.0.8
 //					hmmm... I made a class called Jworld.  This now houses everything that was in
-//					this file.  Maybe a waste of time but I can't say for sure yet.
+//					this file.  Maybe a waste of time but I can't say for sure yet.  Also added a
+//					map class to handle maps
 //
+//					changes 2-2-2003
+//					
+//					ver.1.0
+//					I have decided to skip ver.0.9 and go directly to version 1.0 (don't really know why,
+//					it just happened) I added a menu class and a mission class.  I restructured 
+//					jworld.updateworldstate() to handle	three modes (in game, pause and main menu) 
+//					For now missions and menus are not used but are integrated into the project.
 
 
 #include "Jworld.h"

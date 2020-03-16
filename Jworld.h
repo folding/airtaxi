@@ -10,15 +10,19 @@
 
 #include "JsuperCub.h"
 #include "Jmap.h"
+#include "Jmission.h"
+#include "Jmenu.h"
 
 class Jworld
 {
 public:
+		Jworld();
+
 		void initWorld();
         
 		void updateWorldState();
 
-		void captureInput();
+		void processInput();
 
 protected:
 
@@ -31,6 +35,17 @@ private:
 		u32 fFrames;
 
 		u8 fInRotation;
+
+		Jmenu fMainMenu;
+		Jmenu fPauseMenu;
+
+		Jmission fMissionOne;
+
+		u8 fWhereIWas;
+		u8 fWhereIAm;
+
+		u8 fMenuDecision;
+
 
 };
 

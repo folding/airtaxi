@@ -93,6 +93,12 @@
 				RelativePath="Jmap.cpp">
 			</File>
 			<File
+				RelativePath="Jmenu.cpp">
+			</File>
+			<File
+				RelativePath="Jmission.cpp">
+			</File>
+			<File
 				RelativePath="Jsprite.cpp">
 			</File>
 			<File
@@ -110,6 +116,12 @@
 			Filter="h;hpp;hxx;hm;inl;inc">
 			<File
 				RelativePath="Jmap.h">
+			</File>
+			<File
+				RelativePath="Jmenu.h">
+			</File>
+			<File
+				RelativePath="Jmission.h">
 			</File>
 			<File
 				RelativePath="Jsprite.h">
