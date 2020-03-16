@@ -93,6 +93,9 @@
 				RelativePath="Jsprite.cpp">
 			</File>
 			<File
+				RelativePath="JsuperCub.cpp">
+			</File>
+			<File
 				RelativePath="main.cpp">
 			</File>
 		</Filter>
@@ -101,6 +104,9 @@
 			Filter="h;hpp;hxx;hm;inl;inc">
 			<File
 				RelativePath="Jsprite.h">
+			</File>
+			<File
+				RelativePath="JsuperCub.h">
 			</File>
 			<File
 				RelativePath="..\include\gba.h">

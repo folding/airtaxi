@@ -5,7 +5,9 @@
 //					code from the ham samples folder.  When finished it will be the driver
 //					for my gba version of "air taxi"...
 //	
-//	Changelog:		started 1-30-2003
+//	Changelog:		This is the history of the project. Daily and version changes
+//
+//					started 1-30-2003
 //
 //					At this point the sprite handling has been transfered to the Jsprite class
 //					it is still however mostly hard coded :( so it currently won't do more than
@@ -27,11 +29,17 @@
 //					others that check for only a single button being pushed.  Also mucked with the
 //					background mode to allow text display.  The background, previously bitmap, is
 //					now white with dots...
+//
+//					ver.0.6
+//					Added macros for defining and implementing booleans in Jsprite class.
+//					created JsuperCub class to deal with plane specific issues...  Got rid of 
+//					silly macro warnings for trying to paste a . on the end of an value.  Cut key
+//					query back to every five frames instead of every frame.
 
 
 
 //Jsprite class
-#include "Jsprite.h"
+#include "JsuperCub.h"
 
 //graphics includes
 #include "gfx/object.pal.c"//supercubs color palette
@@ -49,8 +57,8 @@ void vblFunc();
 void query_keys();
 //void redraw_plane();
 
-Jsprite plane; //this is our plane sprite.
-Jsprite otherplane;
+JsuperCub plane; //this is our plane sprite.
+JsuperCub otherplane;
 
 MULTIBOOT
 
@@ -152,8 +160,10 @@ void vblFunc()
 	}	
 
 	//check for a keypress
-	query_keys();
+	if(!(frames%5))
+		query_keys();
 
+	//increment global frame count
 	frames++;
 
 }//end vblFunc
@@ -167,38 +177,32 @@ void query_keys()
 		//rotate plane around x axis
 		//rotate elevators down
 		// make the plane dive
-		ham_DrawText(1,18,"up only");
+		plane.RotateElevatorDown();
 	}
 	else if (F_CTRLINPUT_DOWN_ONLY_PRESSED) {
 		//rotate plane around x axis
 		//rotate elevators up
 		// make the plane climb
-		ham_DrawText(1,18,"down only");
+		plane.RotateElevatorUp();
 	}
 	else if (F_CTRLINPUT_LEFT_ONLY_PRESSED) {
 		//rotate the plane around the z axis
 		//rotate the rudder left
 		// make the plane turn left
-
-		plane.setTextureIndex(plane.getTextureIndex()-1);
-		otherplane.setTextureIndex(plane.getTextureIndex()-1);
-		in_rot = 1;
-		ham_DrawText(1,18,"left only");
+		plane.RotateRudderLeft();		
 
 	}
 	else if (F_CTRLINPUT_RIGHT_ONLY_PRESSED) {
 		//rotate the plane around the z axis
 		//rotate the rudder right
 		// make the plane turn right
-		plane.setTextureIndex(plane.getTextureIndex()+1);
-		otherplane.setTextureIndex(plane.getTextureIndex()+1);
-		in_rot = 1;
-		ham_DrawText(1,18,"right only   ");
+		plane.RotateRudderRight();		
 	}
 	else if (F_CTRLINPUT_A_ONLY_PRESSED) {
 		// varies with mission
 		// example: drop supplies
-		ham_DrawText(1,18,"a only       ");
+		ham_DrawText(1,18,"a only       ");		
+		
 	}
 	else if (F_CTRLINPUT_B_ONLY_PRESSED) {
 		// nothing...
@@ -208,21 +212,26 @@ void query_keys()
 		//rotate the plane around the y axis
 		//rotate the ailerons
 		// make the plane roll right
-		ham_DrawText(1,18,"r only       ");
+		plane.RotateAileronsRight();
+		otherplane.RotateAileronsRight();
+		in_rot = 1;
+
 	}
 	else if (F_CTRLINPUT_L_ONLY_PRESSED) {
 		//rotate the plane around the y axis
 		//rotate the ailerons
 		// make the plane roll left
-		ham_DrawText(1,18,"l only       ");
+		plane.RotateAileronsLeft();
+		otherplane.RotateAileronsLeft();
+		in_rot = 1;
 	}
 	else if (F_CTRLINPUT_B_AND_UP_PRESSED) {
-		//increase plane speed
-		ham_DrawText(1,18,"b and up     ");
+		//increase plane speed		
+		plane.IncreaseSpeed();
 	}
 	else if (F_CTRLINPUT_B_AND_DOWN_PRESSED) {
-		//decrease plane speed
-        ham_DrawText(1,18,"b and down   ");
+		//decrease plane speed        
+		plane.DecreaseSpeed();
 	}
 
 }//end query_keys

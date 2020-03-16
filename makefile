@@ -12,7 +12,7 @@ PROGNAME = airtaxi
 #
 # Set a list of files you want to compile 
 # 
-OFILES += main.o Jsprite.o
+OFILES += main.o Jsprite.o JsuperCub.o
 
 ######################################
 # Standard Makefile targets start here

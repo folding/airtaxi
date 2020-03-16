@@ -26,12 +26,12 @@ struct VECT3D16{
 
 //create variable and prototypes for get/set methods
 #define SprAttr(_type_,_atname_)					\
-private:											\
+protected:											\
 		u##_type_ f##_atname_;						\
 public:												\
 		u##_type_ get##_atname_();					\
 		void set##_atname_(u##_type_ val);			\
-private:											\
+protected:											\
 
 
 //implement get/set methods of specific attr
@@ -45,7 +45,7 @@ private:											\
 
 //create 3D variable and prototypes for get/set methods
 #define Spr3DAttr(_type_,_atname_)					\
-private:											\
+protected:											\
 		struct VECT3D##_type_ f##_atname_;			\
 public:												\
 		u##_type_ getX##_atname_();					\
@@ -54,31 +54,57 @@ public:												\
 		void setY##_atname_(u##_type_ val);			\
 		u##_type_ getZ##_atname_();					\
 		void setZ##_atname_(u##_type_ val);			\
-private:											\
+protected:											\
 
 
 //implement get/set methods of specific 3D attr
 #define ImpSpr3DAttr(_type_,_atname_)				\
 													\
 		u##_type_ Jsprite::getX##_atname_(){		\
-			return f##_atname_##.x;}				\
+			return f##_atname_.x;}					\
 													\
 		void Jsprite::setX##_atname_(u##_type_ val){\
-			f##_atname_##.x = val;}					\
+			f##_atname_.x = val;}					\
 													\
 		u##_type_ Jsprite::getY##_atname_(){		\
-			return f##_atname_##.y;}				\
+			return f##_atname_.y;}					\
 													\
 		void Jsprite::setY##_atname_(u##_type_ val){\
-			f##_atname_##.y = val;}					\
+			f##_atname_.y = val;}					\
 													\
 		u##_type_ Jsprite::getZ##_atname_(){		\
-			return f##_atname_##.z;}				\
+			return f##_atname_.z;}					\
 													\
 		void Jsprite::setZ##_atname_(u##_type_ val){\
-			f##_atname_##.z = val;}					\
+			f##_atname_.z = val;}					\
 
 
+//create bool variable and prototypes for methods
+#define SprBoolAttr(_atname_)						\
+protected:											\
+		bool f##_atname_;							\
+public:												\
+		bool get##_atname_();						\
+		void enable##_atname_();					\
+		void disable##_atname_();					\
+		void toggle##_atname_();					\
+protected:											\
+
+
+//implement bool methods
+#define ImpSprBoolAttr(_atname_)					\
+													\
+		bool Jsprite::get##_atname_(){				\
+			return f##_atname_;}					\
+													\
+		void Jsprite::enable##_atname_(){			\
+			f##_atname_ = true;}					\
+													\
+		void Jsprite::disable##_atname_(){			\
+			f##_atname_ = false;}					\
+													\
+		void Jsprite::toggle##_atname_(){			\
+			f##_atname_ = !f##_atname_;}			\
 
 
 class Jsprite
@@ -97,6 +123,8 @@ public:
 
 private:
 
+protected:
+
 		//array of sprites for all instances of Jsprites
 		SprAttr(8, SpriteNum)
 		
@@ -111,7 +139,7 @@ private:
 		SprAttr(8, Height)
 
 		//whether the sprite is visible or not
-		bool fVisibility;
+		SprBoolAttr(Visibility)
 
 		//current direction		(unit velocity)
 		Spr3DAttr(8, Dir)

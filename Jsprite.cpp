@@ -25,6 +25,8 @@ ImpSprAttr(8, TextureIndex)
 ImpSpr3DAttr(16,Loc)
 ImpSpr3DAttr(8, Dir)
 
+ImpSprBoolAttr(Visibility)
+
 void Jsprite::initSprite(u8 sprnum,unsigned char* bmpsrc,u8 xscreen, u8 yscreen)
 {
 	//sprites index
