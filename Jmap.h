@@ -13,9 +13,19 @@ class Jmap
 {
 public:
 
+	Jmap();
+
 	void initMap();
 
 	u8	getElevation(u16 x, u16 y);
+
+	void RotateLeft();
+	void RotateRight();
+	void ZoomIn();
+	void ZoomOut();
+
+	u16 GetZoom();
+	u16 GetRot();
 
 protected:
 
@@ -27,6 +37,9 @@ private:
 
 	u16 fMapX;
 	u16 fMapY;
+
+	u16 fMapRotation;	
+	u16 fMapZoom;
 
 };
 

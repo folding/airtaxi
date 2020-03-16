@@ -8,6 +8,7 @@
 //graphics includes
 #include "gfx/object.pal.c"//supercubs color palette
 #include "gfx/spr.pal.c"//background palette
+#include "gfx/sprt.pal.c"//mode 4 background
 
 
 #include "Jworld.h"
@@ -33,18 +34,24 @@ Jworld::Jworld()
 {
 	fWhereIAm = INGAME;
 	fWhereIWas = INGAME;
+
 }
 
 void Jworld::initWorld()
 {
 	ham_Init();
 
-	ham_SetBgMode(0);	//set background mode to one
+	ham_SetBgMode(4);	//set background mode to one
 
 	//this is the backgrounds palette 
-	ham_LoadBGPal256((void*)&spr_Palette);	
+	ham_LoadBGPal256((void*)&sprt_Palette);	
 
-	ham_InitText(0);
+	//do this one for tile modes
+	//ham_LoadBGPal256((void*)&spr_Palette);	
+
+	#ifdef TEXT_MODE_OK
+		ham_InitText(0);
+	#endif
 
 	//now load the supercubs color palette
 	ham_LoadObjPal((void*)&object_Palette,256);
@@ -55,10 +62,10 @@ void Jworld::initWorld()
 
 
 	//Display the background
-	ham_InitBg(1,		//background number
+	/*ham_InitBg(1,		//background number
 				1,		//turn bg on/off (1 = on)
 				0,		//set priority (0-high,3-low)
-				0);		//turn mosaic on/off
+				0);		//turn mosaic on/off*/
 
 	//initialize our supercub sprites
 	plane.initPlane();
@@ -126,13 +133,29 @@ void Jworld::updateWorldState()
 			otherplane.changeTexture();
 			fInRotation = 0;
 		}
+
+		if(!(fFrames%5))
+			plane.updateLocation();
+
 		//check time limit
 		if(fFrames == fMissionOne.GetTimeLimit())
+		{
+		#ifdef TEXT_MODE_OK
 			ham_DrawText(1,18,"GAME OVER YOU LOSE ");
+		#endif
+			
+		}
 
 		//update plane position
 
 		//update map business
+
+		ham_RotBg(2,							//background number
+				  fMap.GetRot(),				//angle
+				  plane.getXLoc(),				//x center of rotation		//xloc yloc are upper left corner of sprite.... should find center of plane instead....
+				  plane.getYLoc(),				//y center of rotation
+				  0x100+(SIN_SFP32[fMap.GetZoom()])	//zoom factor
+				  );
 
 		//check collision
         
@@ -196,18 +219,21 @@ void Jworld::processInput()
 		//rotate elevators down
 		// make the plane dive
 		plane.RotateElevatorDown();
+		fMap.ZoomIn();
 	}
 	else if (F_CTRLINPUT_DOWN_ONLY_PRESSED) {
 		//rotate plane around x axis
 		//rotate elevators up
 		// make the plane climb
 		plane.RotateElevatorUp();
+		fMap.ZoomOut();
 	}
 	else if (F_CTRLINPUT_LEFT_ONLY_PRESSED) {
 		//rotate the plane around the z axis
 		//rotate the rudder left
 		// make the plane turn left
-		plane.RotateRudderLeft();		
+		plane.RotateRudderLeft();
+		fMap.RotateLeft();
 
 	}
 	else if (F_CTRLINPUT_RIGHT_ONLY_PRESSED) {
@@ -215,16 +241,22 @@ void Jworld::processInput()
 		//rotate the rudder right
 		// make the plane turn right
 		plane.RotateRudderRight();		
+		fMap.RotateRight();
 	}
 	else if (F_CTRLINPUT_A_ONLY_PRESSED) {
 		// varies with mission
 		// example: drop supplies
-		ham_DrawText(1,18,"a only       ");		
+		#ifdef TEXT_MODE_OK
+			ham_DrawText(1,18,"a only       ");		
+		#endif
+
 
 	}
 	else if (F_CTRLINPUT_B_ONLY_PRESSED) {
 		// nothing...
-		ham_DrawText(1,18,"b only       ");
+		#ifdef TEXT_MODE_OK
+			ham_DrawText(1,18,"b only       ");
+		#endif
 	}
 	else if (F_CTRLINPUT_R_ONLY_PRESSED) {
 		//rotate the plane around the y axis

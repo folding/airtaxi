@@ -140,6 +140,9 @@
 				RelativePath="..\include\gba.h">
 			</File>
 			<File
+				RelativePath="..\tools\win32\gfx2gba-readme.txt">
+			</File>
+			<File
 				RelativePath="makefile">
 			</File>
 			<File

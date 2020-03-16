@@ -55,6 +55,15 @@
 //					it just happened) I added a menu class and a mission class.  I restructured 
 //					jworld.updateworldstate() to handle	three modes (in game, pause and main menu) 
 //					For now missions and menus are not used but are integrated into the project.
+//
+//					changes 2-3-2003
+//
+//					ver.1.1
+//					I converted to background mode 4 and hooked up the background rotation and scaling
+//					in process added variables to the map class and accesser functions.  that is all.
+//
+//
+//
 
 
 #include "Jworld.h"

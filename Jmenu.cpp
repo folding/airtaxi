@@ -98,8 +98,8 @@ u8 Jmenu::ProcessInput()
 		MoveSelectorDown();
 	else if(F_CTRLINPUT_A_ONLY_PRESSED)
 		return fCurOption;
-	else	
-		return NODECISION;
+	//else	
+	return NODECISION;
 }
 
 void Jmenu::ViewMenu()

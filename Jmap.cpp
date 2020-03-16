@@ -5,15 +5,30 @@
 //	Changelog:		started 2-1-2003
 //
 
+//#define TILE_MODE_OK
+#undef TILE_MODE_OK
 
 #include "Jmap.h"
 
-#include "gfx/sprite.raw.c"
-#include "gfx/sprite.map.c"
+#ifdef TILE_MODE_OK
+	#include "gfx/sprite.raw.c"
+	#include "gfx/sprite.map.c"
+#else
+	#include "gfx/sprt.raw.c"
+#endif
+
+
+
+Jmap::Jmap()
+{
+	fMapZoom = 0;
+	fMapRotation = 0;
+}
 
 void Jmap::initMap()
 {
-	map_fragment_info_ptr  bg_pic; //map pointer
+#ifdef TILE_MODE_OK
+/*	map_fragment_info_ptr  bg_pic; //map pointer
 
 
 	ham_bg[1].ti = ham_InitTileSet((void*)&sprite_Tiles,		//ptr to source
@@ -39,7 +54,19 @@ void Jmap::initMap()
 	ham_InsertMapFragment(bg_pic,		//map fragment ptr
 							0,			//background number
 							0,			//x tilenumber to place frag
-							0);			//y tilenumber..
+							0);			//y tilenumber..*/
+
+#else 
+
+	//this is set up for mode 4 one big bitmap.
+	TOOL_DMA3_SET(&sprt_Bitmap,				//source address
+				  MEM_BG_PTR,				//destination address
+				  SIZEOF_32BIT(sprt_Bitmap),//size
+				  DMA_TRANSFER_32BIT,		//mode
+				  DMA_STARTAT_NOW)			//timing
+
+
+#endif
 
 }
 
@@ -50,3 +77,47 @@ u8 Jmap::getElevation(u16 x, u16 y)
 
 }
 
+void Jmap::RotateLeft()
+{
+	if(fMapRotation == 0)
+		fMapRotation = 359;
+	else
+		fMapRotation--;
+}
+
+void Jmap::RotateRight()
+{
+	if(fMapRotation == 359)
+		fMapRotation = 0;
+	else
+		fMapRotation++;
+}
+
+void Jmap::ZoomIn()
+{
+	if (fMapZoom == 359) {
+		//do nothing
+	}
+	else
+		fMapZoom++;
+}
+
+void Jmap::ZoomOut()
+{
+	if(fMapZoom == 0)
+	{
+		//do nothing
+	}
+	else
+		fMapZoom--;
+}
+
+u16 Jmap::GetRot()
+{
+	return fMapRotation;
+}
+
+u16 Jmap::GetZoom()
+{
+	return fMapZoom;
+}

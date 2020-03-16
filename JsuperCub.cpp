@@ -8,6 +8,9 @@
 #include "JsuperCub.h"
 #include "gfx/supercub_anim.raw.c"
 
+//#define TEXT_MODE_OK
+#undef TEXT_MODE_OK
+
 JsuperCub::JsuperCub()
 {
 
@@ -62,40 +65,52 @@ void JsuperCub::initPlane()
 
 void JsuperCub::DecreaseSpeed()
 {
+#ifdef TEXT_MODE_OK
 	ham_DrawText(1,18,"b and down   ");
+#endif	
+	fSpeed--;
 }
 
 void JsuperCub::IncreaseSpeed()
 {
+#ifdef TEXT_MODE_OK
 	ham_DrawText(1,18,"b and up     ");
+#endif
+
+	fSpeed++;
 }
 
 void JsuperCub::RotateAileronsLeft()
 {
 	if(fTextureIndex < fFramesOfAnim)
 		fTextureIndex++;
-
+#ifdef TEXT_MODE_OK
 	ham_DrawText(1,18,"l only       ");
+#endif
 }
 
 void JsuperCub::RotateAileronsRight()
 {
 	if(fTextureIndex > 0)
 		fTextureIndex--;
-
+#ifdef TEXT_MODE_OK
 	ham_DrawText(1,18,"r only       ");
+#endif
 }
 
 
 void JsuperCub::RotateElevatorDown()
 {
+#ifdef TEXT_MODE_OK
 	ham_DrawText(1,18,"up only");
+#endif
 }
 
 void JsuperCub::RotateElevatorUp()
 {
+#ifdef TEXT_MODE_OK
 	ham_DrawText(1,18,"down only");
-
+#endif
 }
 
 void JsuperCub::RotateFlapsDown()
@@ -111,10 +126,14 @@ void JsuperCub::RotateFlapsUp()
 
 void JsuperCub::RotateRudderLeft()
 {
+#ifdef TEXT_MODE_OK
 	ham_DrawText(1,18,"left only");
+#endif
 }
 
 void JsuperCub::RotateRudderRight()
 {
+#ifdef TEXT_MODE_OK
 	ham_DrawText(1,18,"right only   ");
+#endif
 }

@@ -46,6 +46,8 @@ private:
 
 		u8 fMenuDecision;
 
+		
+
 
 };
 
