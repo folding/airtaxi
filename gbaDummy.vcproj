@@ -96,6 +96,9 @@
 				RelativePath="JsuperCub.cpp">
 			</File>
 			<File
+				RelativePath="Jworld.cpp">
+			</File>
+			<File
 				RelativePath="main.cpp">
 			</File>
 		</Filter>
@@ -107,6 +110,9 @@
 			</File>
 			<File
 				RelativePath="JsuperCub.h">
+			</File>
+			<File
+				RelativePath="Jworld.h">
 			</File>
 			<File
 				RelativePath="..\include\gba.h">

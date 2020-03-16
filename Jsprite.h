@@ -134,6 +134,8 @@ public:
 
 		void changeTexture();
 
+		void updateLocation();
+
 private:
 
 protected:

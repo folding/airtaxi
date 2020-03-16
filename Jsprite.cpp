@@ -119,7 +119,12 @@ void Jsprite::changeTexture()
 }
 
 
-
+void Jsprite::updateLocation()
+{
+	ham_SetObjXY(fSpriteNum,			//this sprites handle
+				 fLoc.x+fDir.x*fSpeed,	//location + direction*speed
+				 fLoc.y+fDir.y*fSpeed);	//location + direction*speed
+}
 
 
 

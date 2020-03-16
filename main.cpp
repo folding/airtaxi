@@ -40,195 +40,43 @@
 //					hard coded supercub values into the JsuperCub class for simple set up of the cub
 //					extended the Jsprite.initSprite to take all possible parameters for sprite creation
 //					and other values I crammed into the Jsprite class
+//
+//					changes 2-1-2003
+//
+//					ver.0.8
+//					hmmm... I made a class called Jworld.  This now houses everything that was in
+//					this file.  Maybe a waste of time but I can't say for sure yet.
+//
 
 
-
-//Jsprite class
-#include "JsuperCub.h"
-
-//graphics includes
-#include "gfx/object.pal.c"//supercubs color palette
-
-#include "gfx/spr.pal.c"
-#include "gfx/sprite.raw.c"
-#include "gfx/sprite.map.c"
-
-u8 in_rot;
-
-// global frame counter
-u32 frames=0;
+#include "Jworld.h"
 
 void vblFunc();
-void query_keys();
-//void redraw_plane();
 
-//ok, this is against every thing I believe in but...
-JsuperCub plane; //this is our plane sprite.
-JsuperCub otherplane;
+//do you like my global variable?
+Jworld myWorld;
+
 
 //MULTIBOOT //I don't think this rom will need to be multibootable...
 
 int main(void)
 {
-    // initialize HAMlib
-    ham_Init();
-
-	map_fragment_info_ptr  bg_pic; //map pointer
-
-	ham_SetBgMode(0);	//set background mode to one
-
-    ham_LoadBGPal256((void*)&spr_Palette);
-	
-	ham_InitText(0);
-	//now load the supercubs color palette
-	ham_LoadObjPal((void*)&object_Palette,256);
-
-	ham_bg[1].ti = ham_InitTileSet((void*)&sprite_Tiles,		//ptr to source
-								   SIZEOF_16BIT(sprite_Tiles),	//number of 16bit chunks
-								   1,							//color/palette mode
-								   1);							//offset or not...
-
-	ham_bg[1].mi = ham_InitMapEmptySet(3,				//map size				
-									   0);				//rotatable (0 = no)
-
-	bg_pic = ham_InitMapFragment((void*)&sprite_Map,	//ptr to source
-								 30,					//map x size
-								 20,					//map y size
-								 0,						//x offset
-								 0,						//y offset
-								 1,						//num tiles in x direct
-								 1,						//num tiles in y direct
-								 0);					//rotatable (0 = no)
-
-	ham_InsertMapFragment(bg_pic,		//map fragment ptr
-						  0,			//background number
-						  0,			//x tilenumber to place frag
-						  0);			//y tilenumber..
-
-
-	//Display the background
-	ham_InitBg(1,		//background number
-			   1,		//turn bg on/off (1 = on)
-			   0,		//set priority (0-high,3-low)
-			   0);		//turn mosaic on/off
-
-	//initialize our supercub sprite
-	plane.initPlane();
-
-	otherplane.initPlane();
-	otherplane.setXLoc(10);
-	otherplane.setYLoc(10);
-	ham_SetObjXY(otherplane.getSpriteNum(),10,10);
-
-
-	plane.changeTexture();
-	otherplane.changeTexture();
-	//change the planes texture
-	/*ham_UpdateObjGfx(plane[0],
-					 (void*)&supercub_anim_Bitmap[4096*rot_plane]);
-	//send updated sprite to hardware
-	ham_CopyObjToOAM();*/
+    // initialize world
+	myWorld.initWorld();
 
 	//start the Vertical BLank interrupt handler
 	ham_StartIntHandler(INT_TYPE_VBL,(void*)&vblFunc);		//calls vblFunc ~60 times per sec
 
 	//infinite loop so program doesn't end
     while(1)
-    {
-		
-    }    
+    {}    
+
 }//end main
 
 void vblFunc()
 {
-	// only update animation every 5th frame, 
-	// and only if the plane is "in rotation"
-	if(!(frames%5)&& in_rot)
-	{
-		//change the planes texture if necessary
-		plane.changeTexture();		
-		otherplane.changeTexture();
-		in_rot = 0;
-	}	
-
-	//check for a keypress
-	if(!(frames%5))
-		query_keys();
-
-	//increment global frame count
-	frames++;
-
-}//end vblFunc
-	
-void query_keys()
-{
-	//all references to axis assume positive z comes directly out of the screen,
-	// positive x extends to the right and positive y extend up the screen
-	
-	if (F_CTRLINPUT_UP_ONLY_PRESSED){
-		//rotate plane around x axis
-		//rotate elevators down
-		// make the plane dive
-		plane.RotateElevatorDown();
-	}
-	else if (F_CTRLINPUT_DOWN_ONLY_PRESSED) {
-		//rotate plane around x axis
-		//rotate elevators up
-		// make the plane climb
-		plane.RotateElevatorUp();
-	}
-	else if (F_CTRLINPUT_LEFT_ONLY_PRESSED) {
-		//rotate the plane around the z axis
-		//rotate the rudder left
-		// make the plane turn left
-		plane.RotateRudderLeft();		
-
-	}
-	else if (F_CTRLINPUT_RIGHT_ONLY_PRESSED) {
-		//rotate the plane around the z axis
-		//rotate the rudder right
-		// make the plane turn right
-		plane.RotateRudderRight();		
-	}
-	else if (F_CTRLINPUT_A_ONLY_PRESSED) {
-		// varies with mission
-		// example: drop supplies
-		ham_DrawText(1,18,"a only       ");		
-		
-	}
-	else if (F_CTRLINPUT_B_ONLY_PRESSED) {
-		// nothing...
-		ham_DrawText(1,18,"b only       ");
-	}
-	else if (F_CTRLINPUT_R_ONLY_PRESSED) {
-		//rotate the plane around the y axis
-		//rotate the ailerons
-		// make the plane roll right
-		plane.RotateAileronsRight();
-		otherplane.RotateAileronsRight();
-		in_rot = 1;
-
-	}
-	else if (F_CTRLINPUT_L_ONLY_PRESSED) {
-		//rotate the plane around the y axis
-		//rotate the ailerons
-		// make the plane roll left
-		plane.RotateAileronsLeft();
-		otherplane.RotateAileronsLeft();
-		in_rot = 1;
-	}
-	else if (F_CTRLINPUT_B_AND_UP_PRESSED) {
-		//increase plane speed		
-		plane.IncreaseSpeed();
-	}
-	else if (F_CTRLINPUT_B_AND_DOWN_PRESSED) {
-		//decrease plane speed        
-		plane.DecreaseSpeed();
-	}
-
-}//end query_keys
-
-
+	myWorld.updateWorldState();
+}
 
 
 
