@@ -158,6 +158,25 @@
 				</File>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="gfx"
+			Filter="">
+			<File
+				RelativePath="gfx\object.pal.c">
+			</File>
+			<File
+				RelativePath="gfx\spr.pal.c">
+			</File>
+			<File
+				RelativePath="gfx\sprite.map.c">
+			</File>
+			<File
+				RelativePath="gfx\sprite.raw.c">
+			</File>
+			<File
+				RelativePath="gfx\supercub_anim.raw.c">
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

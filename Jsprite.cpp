@@ -6,7 +6,7 @@
 //
 
 #include "Jsprite.h"
-#include "gfx/supercub_anim.raw.c"
+
 
 Jsprite::Jsprite()
 {
@@ -14,7 +14,7 @@ Jsprite::Jsprite()
 
 }
 
-void Jsprite::initSprite()
+void Jsprite::initSprite(unsigned char* bmpsrc)
 {
 	//sprites location in world
 	fLoc.x = 110;  
@@ -42,11 +42,11 @@ void Jsprite::initSprite()
 	//current frame of animation
 	fTextureIndex = 7;
 
-	//fBmpArray = &supercub_anim_Bitmap;
+	fBmpArray = bmpsrc;
 
 	//sprite index for this sprite
 	//Does this mean 1-128? i think so
-	fSprite[0] = ham_CreateObj((void*)&supercub_anim_Bitmap,//ptr to sprite
+	fSprite[0] = ham_CreateObj((void*)bmpsrc,//ptr to sprite
 									0,						//sprite shape
 									3,	//64x64				//sprite size
 									OBJ_MODE_NORMAL,		//display sprite normal(nofx)
@@ -77,8 +77,8 @@ ImpSpr3DAttr(8, Dir)
 void Jsprite::changeTexture()
 {
 	//change the planes texture
-	ham_UpdateObjGfx(fSprite[0],(void*)&supercub_anim_Bitmap[4096*fTextureIndex]);
-
+	ham_UpdateObjGfx(fSprite[0],(void*)(fBmpArray+(4096*fTextureIndex)));
+	
 	//send updated sprite to hardware
 	ham_CopyObjToOAM();
 }

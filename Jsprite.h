@@ -87,7 +87,7 @@ public:
 
 		Jsprite();
 
-		void initSprite();
+		void initSprite(unsigned char* bmpsrc);
 
 		void changeTexture();
 
@@ -119,7 +119,7 @@ private:
 		u8 fSprite[1]; //Does this mean 1-128? i think so
 
 		//ptr to bitmap
-		const unsigned char* fBmpArray;
+		unsigned char* fBmpArray;
         
 
 

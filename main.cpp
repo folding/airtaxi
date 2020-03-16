@@ -10,27 +10,25 @@
 //					At this point the sprite handling has been transfered to the Jsprite class
 //					it is still however mostly hard coded :( so it currently won't do more than
 //					one sprite.
+//
+//					changes 1-31-2003
+//
+//					Jsprite.initSprite() now takes a ptr to the array representing the bmp
+//
 
-//#include "mygba.h" //included in Jsprite.h
+
 
 //Jsprite class
 #include "Jsprite.h"
 
 //graphics includes
 #include "gfx/object.pal.c"//supercubs color palette
-//#include "gfx/supercub_anim.raw.c"
+#include "gfx/supercub_anim.raw.c"
 #include "gfx/spr.pal.c"
 #include "gfx/sprite.raw.c"
 #include "gfx/sprite.map.c"
 
-
-//u16 rot_plane = 7;
-//u8 plane[1];//sprite index for the plane //is this array notation so it is a pointer?
-//u8 plane_x = 110;
-//u8 plane_y = 50;
-
-// when plane rotates, this is 1
-u8 in_rot=0;
+u8 in_rot;
 
 // global frame counter
 u32 frames=0;
@@ -39,7 +37,7 @@ void vblFunc();
 void query_keys();
 //void redraw_plane();
 
-Jsprite plane;
+Jsprite plane; //this is our plane sprite.
 
 MULTIBOOT
 
@@ -88,7 +86,7 @@ int main(void)
 			   0);		//turn mosaic on/off
 
 	//initialize our supercub sprite
-	plane.initSprite();
+	plane.initSprite((unsigned char*)&supercub_anim_Bitmap);
 
 
 	/*plane[0] = ham_CreateObj((void*)&supercub_anim_Bitmap, //ptr to sprite
