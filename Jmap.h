@@ -7,6 +7,20 @@
 //	Changelog:		started 2-1-2003
 //
 
+
+
+//here is a map idea that I am not sure the hardware can handle...  There will 
+//be a huge map in memory somewhere.  A 512x512 chunk will be sent to the
+//viewable part of memory.  When the plane crosses some boundary another chunk
+//will be copied into viewable memory that overlaps the screen area.  This
+//could take advantage of the double buffering available in mode 4.  If there 
+//is a delay during copying it could get annoying quickly.
+
+
+//another possibility would be to make a collection of sprites that make up the
+//background and then move them together (rotation would take some thought...
+
+
 #include "mygba.h"
 
 class Jmap

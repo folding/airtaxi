@@ -62,8 +62,12 @@
 //					I converted to background mode 4 and hooked up the background rotation and scaling
 //					in process added variables to the map class and accesser functions.  that is all.
 //
+//					changes 2-4-2003
 //
-//
+//					ver.1.2
+//					attempted to do a big background but it appears the maxsize allowable in mode 4 is
+//					240x160... that won't work well for what I had intended to implement.  I have now
+//					attempted to rotate sprites just to see how ham does this. it hasn't worked yet.
 
 
 #include "Jworld.h"

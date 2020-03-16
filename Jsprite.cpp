@@ -12,6 +12,7 @@ Jsprite::Jsprite()
 {
 	//hmm.. do nothing
 
+
 }
 
 //here are the implementations of get and sets
@@ -107,6 +108,16 @@ void Jsprite::initSprite(unsigned char* bmpsrc,	//ptr to bmp array
 
 									//me thinks the screen coords should be fixed...
 									//if map will be rotated and moving about, not sprite
+
+
+	ham_SetObjRotEnable(fSpriteNum,	   //sprite number
+						1);			   //0-off 1-on
+	
+	ham_SetObjRotSetSelect(fSpriteNum, //sprite number
+						   0);		   //which rotation set to use
+
+
+	
 }
 
 void Jsprite::changeTexture()
@@ -115,7 +126,7 @@ void Jsprite::changeTexture()
 	ham_UpdateObjGfx(fSpriteNum,(void*)(fBmpArray+(4096*fTextureIndex)));
 	
 	//send updated sprite to hardware
-	ham_CopyObjToOAM();
+	//ham_CopyObjToOAM();
 }
 
 
@@ -134,7 +145,10 @@ unsigned char* Jsprite::getBitmapArray()
 	return fBmpArray;
 }
 
+void Jsprite::rotateLeft()
+{
 
+}
 
 
 

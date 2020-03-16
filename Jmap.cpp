@@ -15,6 +15,7 @@
 	#include "gfx/sprite.map.c"
 #else
 	#include "gfx/sprt.raw.c"
+	//#include "gfx/maptest.raw.c"
 #endif
 
 

@@ -7,8 +7,9 @@
 
 //graphics includes
 #include "gfx/object.pal.c"//supercubs color palette
-#include "gfx/spr.pal.c"//background palette
+//#include "gfx/spr.pal.c"//background palette
 #include "gfx/sprt.pal.c"//mode 4 background
+//#include "gfx/maptest.pal.c"
 
 
 #include "Jworld.h"
@@ -34,6 +35,8 @@ Jworld::Jworld()
 {
 	fWhereIAm = INGAME;
 	fWhereIWas = INGAME;
+
+
 
 }
 
@@ -67,6 +70,7 @@ void Jworld::initWorld()
 				0,		//set priority (0-high,3-low)
 				0);		//turn mosaic on/off*/
 
+
 	//initialize our supercub sprites
 	plane.initPlane();
 
@@ -77,6 +81,7 @@ void Jworld::initWorld()
 	plane.changeTexture();
 	otherplane.changeTexture();
 
+	ham_CopyObjToOAM();
 	
 }
 
@@ -149,7 +154,7 @@ void Jworld::updateWorldState()
 		//update plane position
 
 		//update map business
-
+		//maybe put this into map class...
 		ham_RotBg(2,							//background number
 				  fMap.GetRot(),				//angle
 				  plane.getXLoc(),				//x center of rotation		//xloc yloc are upper left corner of sprite.... should find center of plane instead....
@@ -159,7 +164,17 @@ void Jworld::updateWorldState()
 
 		//check collision
         
-        
+
+
+
+			//this is in prep for rotatable sprites...
+			ham_RotObjDefineSet(0,		//rotation set (0-31)
+								fFrames%360,//rotation angle
+								0x100,		//x zoom
+								0x100);		//y zoom
+
+		//update sprite junk...
+        ham_CopyObjToOAM();
 
 		break;
 

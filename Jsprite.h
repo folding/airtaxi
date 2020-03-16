@@ -138,6 +138,9 @@ public:
 
 		unsigned char* getBitmapArray();
 
+		void rotateLeft();
+		void rotateRight();
+
 private:
 
 protected:
