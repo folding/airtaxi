@@ -136,6 +136,8 @@ public:
 
 		void updateLocation();
 
+		unsigned char* getBitmapArray();
+
 private:
 
 protected:

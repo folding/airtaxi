@@ -127,6 +127,10 @@ void Jsprite::updateLocation()
 }
 
 
+unsigned char* Jsprite::getBitmapArray()
+{
+	return fBmpArray;
+}
 
 
 

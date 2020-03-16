@@ -9,6 +9,7 @@
 //
 
 #include "JsuperCub.h"
+#include "Jmap.h"
 
 class Jworld
 {
@@ -24,6 +25,8 @@ protected:
 private:
 		JsuperCub plane; //this is our plane sprite.
 		JsuperCub otherplane;
+
+		Jmap fMap;
 
 		u32 fFrames;
 

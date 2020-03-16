@@ -7,9 +7,8 @@
 
 //graphics includes
 #include "gfx/object.pal.c"//supercubs color palette
-#include "gfx/spr.pal.c"
-#include "gfx/sprite.raw.c"
-#include "gfx/sprite.map.c"
+#include "gfx/spr.pal.c"//background palette
+
 
 #include "Jworld.h"
 
@@ -17,8 +16,6 @@
 void Jworld::initWorld()
 {
 	ham_Init();
-
-	map_fragment_info_ptr  bg_pic; //map pointer
 
 	ham_SetBgMode(0);	//set background mode to one
 
@@ -30,27 +27,9 @@ void Jworld::initWorld()
 	//now load the supercubs color palette
 	ham_LoadObjPal((void*)&object_Palette,256);
 
-	ham_bg[1].ti = ham_InitTileSet((void*)&sprite_Tiles,		//ptr to source
-									SIZEOF_16BIT(sprite_Tiles),	//number of 16bit chunks
-									1,							//color/palette mode
-									1);							//offset or not...
 
-	ham_bg[1].mi = ham_InitMapEmptySet(3,				//map size				
-										0);				//rotatable (0 = no)
 
-	bg_pic = ham_InitMapFragment((void*)&sprite_Map,	//ptr to source
-									30,					//map x size
-									20,					//map y size
-									0,					//x offset
-									0,					//y offset
-									1,					//num tiles in x direct
-									1,					//num tiles in y direct
-									0);					//rotatable (0 = no)
-
-	ham_InsertMapFragment(bg_pic,		//map fragment ptr
-							0,			//background number
-							0,			//x tilenumber to place frag
-							0);			//y tilenumber..
+	fMap.initMap();
 
 
 	//Display the background
