@@ -1,15 +1,29 @@
-#include "Jsprite.h"
+//  Filename:		Jsprite.cpp
+//	Author:			John Carlson
+//	Description:	This is my class to encapsulate the business of dealing with sprites
+//	
+//	Changelog:		started 1-30-2003
+//
 
-Jsprite::Jsprite(const unsigned char bmpArr)
+#include "Jsprite.h"
+#include "gfx/supercub_anim.raw.c"
+
+Jsprite::Jsprite()
+{
+	//hmm.. do nothing
+
+}
+
+void Jsprite::initSprite()
 {
 	//sprites location in world
-	fLoc.x = 0;  
-	fLoc.y = 0; 
+	fLoc.x = 110;  
+	fLoc.y = 50; 
 	fLoc.z = 0;
 
 	//sprite dimensions
-	fWidth = 0;
-	fHeight = 0;
+	fWidth = 64;
+	fHeight = 64;
 
 	//whether the sprite is visible or not
 	fVisibility = true;
@@ -26,13 +40,13 @@ Jsprite::Jsprite(const unsigned char bmpArr)
 	fFramesOfAnim = 0;
 
 	//current frame of animation
-	fTextureIndex = 0;
+	fTextureIndex = 7;
 
-	fBmpArray = &bmpArr;
+	//fBmpArray = &supercub_anim_Bitmap;
 
 	//sprite index for this sprite
 	//Does this mean 1-128? i think so
-	fSprite[0] = ham_CreateObj((void*)fBmpArray,			//ptr to sprite
+	fSprite[0] = ham_CreateObj((void*)&supercub_anim_Bitmap,//ptr to sprite
 									0,						//sprite shape
 									3,	//64x64				//sprite size
 									OBJ_MODE_NORMAL,		//display sprite normal(nofx)
@@ -50,11 +64,37 @@ Jsprite::Jsprite(const unsigned char bmpArr)
 									//if map will be rotated and moving about, not sprite
 }
 
+ImpSprAttr(8, Width)
+ImpSprAttr(8, Height)
+ImpSprAttr(8, Speed)
+ImpSprAttr(8, FramesOfAnim)
+ImpSprAttr(8, TextureIndex)
+
+ImpSpr3DAttr(16,Loc)
+ImpSpr3DAttr(8, Dir)
+
+
 void Jsprite::changeTexture()
 {
 	//change the planes texture
-	ham_UpdateObjGfx(fSprite[0],(void*)&bmpArray[4096*fTextureIndex]);
+	ham_UpdateObjGfx(fSprite[0],(void*)&supercub_anim_Bitmap[4096*fTextureIndex]);
 
 	//send updated sprite to hardware
 	ham_CopyObjToOAM();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

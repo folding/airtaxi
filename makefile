@@ -7,12 +7,12 @@ include $(HAMDIR)/system/master.mak
 #
 # Set the name of your desired GBA image name here
 #
-PROGNAME = proj
+PROGNAME = airtaxi
 
 #
 # Set a list of files you want to compile 
 # 
-OFILES += main.o
+OFILES += main.o Jsprite.o
 
 ######################################
 # Standard Makefile targets start here

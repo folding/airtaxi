@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gbaDummy", "gbaDummy.vcproj", "{DBF9CBCE-8153-470D-A6D2-13F9EE72AB3C}"
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{DBF9CBCE-8153-470D-A6D2-13F9EE72AB3C}.Debug.ActiveCfg = Debug|Win32
+		{DBF9CBCE-8153-470D-A6D2-13F9EE72AB3C}.Debug.Build.0 = Debug|Win32
+		{DBF9CBCE-8153-470D-A6D2-13F9EE72AB3C}.Release.ActiveCfg = Release|Win32
+		{DBF9CBCE-8153-470D-A6D2-13F9EE72AB3C}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
