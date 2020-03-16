@@ -87,14 +87,24 @@ public:
 
 		Jsprite();
 
-		void initSprite(unsigned char* bmpsrc);
+		void initSprite(u8 sprnum,				//sprite index 0-127
+						unsigned char* bmpsrc,	//ptr to bmp array
+						u8 xscreen,				//x screen coord
+						u8 yscreen				//y screen coord
+						);
 
 		void changeTexture();
 
 private:
-		//sprites world location
-		Spr3DAttr(16, Loc)
+
+		//array of sprites for all instances of Jsprites
+		SprAttr(8, SpriteNum)
 		
+		//this sprites index into above array
+		SprAttr(8,Index)
+
+		//sprites world location
+		Spr3DAttr(16, Loc)            	
 
 		//sprite dimensions
 		SprAttr(8, Width)
@@ -114,10 +124,7 @@ private:
 
 		//current frame of animation
 		SprAttr(8, TextureIndex)
-
-		//sprite index for this sprite
-		u8 fSprite[1]; //Does this mean 1-128? i think so
-
+		
 		//ptr to bitmap
 		unsigned char* fBmpArray;
         

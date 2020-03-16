@@ -14,8 +14,22 @@ Jsprite::Jsprite()
 
 }
 
-void Jsprite::initSprite(unsigned char* bmpsrc)
+//here are the implementations of get and sets
+ImpSprAttr(8, SpriteNum)
+ImpSprAttr(8, Width)
+ImpSprAttr(8, Height)
+ImpSprAttr(8, Speed)
+ImpSprAttr(8, FramesOfAnim)
+ImpSprAttr(8, TextureIndex)
+
+ImpSpr3DAttr(16,Loc)
+ImpSpr3DAttr(8, Dir)
+
+void Jsprite::initSprite(u8 sprnum,unsigned char* bmpsrc,u8 xscreen, u8 yscreen)
 {
+	//sprites index
+	fIndex = sprnum;
+
 	//sprites location in world
 	fLoc.x = 110;  
 	fLoc.y = 50; 
@@ -46,7 +60,7 @@ void Jsprite::initSprite(unsigned char* bmpsrc)
 
 	//sprite index for this sprite
 	//Does this mean 1-128? i think so
-	fSprite[0] = ham_CreateObj((void*)bmpsrc,//ptr to sprite
+	fSpriteNum = ham_CreateObj((void*)bmpsrc,//ptr to sprite
 									0,						//sprite shape
 									3,	//64x64				//sprite size
 									OBJ_MODE_NORMAL,		//display sprite normal(nofx)
@@ -57,27 +71,17 @@ void Jsprite::initSprite(unsigned char* bmpsrc)
 									0,						//vert flip on/off
 									0,						//priority(0-high, 3-low)
 									0,						//doublesize on/off
-									fLoc.x,					//x screen coord
-									fLoc.y	);				//y screen coord
+									xscreen,				//x screen coord
+									yscreen	);				//y screen coord
 
 									//me thinks the screen coords should be fixed...
 									//if map will be rotated and moving about, not sprite
 }
 
-ImpSprAttr(8, Width)
-ImpSprAttr(8, Height)
-ImpSprAttr(8, Speed)
-ImpSprAttr(8, FramesOfAnim)
-ImpSprAttr(8, TextureIndex)
-
-ImpSpr3DAttr(16,Loc)
-ImpSpr3DAttr(8, Dir)
-
-
 void Jsprite::changeTexture()
 {
 	//change the planes texture
-	ham_UpdateObjGfx(fSprite[0],(void*)(fBmpArray+(4096*fTextureIndex)));
+	ham_UpdateObjGfx(fSpriteNum,(void*)(fBmpArray+(4096*fTextureIndex)));
 	
 	//send updated sprite to hardware
 	ham_CopyObjToOAM();

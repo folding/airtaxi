@@ -14,7 +14,11 @@
 //					changes 1-31-2003
 //
 //					Jsprite.initSprite() now takes a ptr to the array representing the bmp
-//
+//					...
+//					Can now make different sprites based.  I ditched the idea of having one big
+//					static array of 128 sprites in the sprite class because the compiler balked
+//					at it.  So each instance has a u8 that corresponds with its sprite data.
+//					initSprite now also takes a screen x&y position
 
 
 
@@ -38,6 +42,7 @@ void query_keys();
 //void redraw_plane();
 
 Jsprite plane; //this is our plane sprite.
+Jsprite otherplane;
 
 MULTIBOOT
 
@@ -86,8 +91,13 @@ int main(void)
 			   0);		//turn mosaic on/off
 
 	//initialize our supercub sprite
-	plane.initSprite((unsigned char*)&supercub_anim_Bitmap);
+	plane.initSprite(0,										//sprite index number 0 - 127
+					 (unsigned char*)&supercub_anim_Bitmap,	//pointer to bmp array
+					 110,
+					 50
+					);
 
+	otherplane.initSprite(1,(unsigned char*)&supercub_anim_Bitmap,10,10);
 
 	/*plane[0] = ham_CreateObj((void*)&supercub_anim_Bitmap, //ptr to sprite
 							 0,						//sprite shape
@@ -104,6 +114,7 @@ int main(void)
 							 plane_y);				//y screen coord*/
 
 	plane.changeTexture();
+	otherplane.changeTexture();
 	//change the planes texture
 	/*ham_UpdateObjGfx(plane[0],
 					 (void*)&supercub_anim_Bitmap[4096*rot_plane]);
@@ -127,7 +138,7 @@ void vblFunc()
 	{
 		//change the planes texture if necessary
 		plane.changeTexture();		
-
+		otherplane.changeTexture();
 		in_rot = 0;
 	}	
 
@@ -144,6 +155,7 @@ void query_keys()
 	{
 		//rotate the plane back to the left
 		plane.setTextureIndex(plane.getTextureIndex()-1);
+		otherplane.setTextureIndex(plane.getTextureIndex()-1);
 		in_rot = 1;
 
 	}
@@ -152,6 +164,7 @@ void query_keys()
 	{
 		//rotate the plane to the right
 		plane.setTextureIndex(plane.getTextureIndex()+1);
+		otherplane.setTextureIndex(plane.getTextureIndex()+1);
 		in_rot = 1;
 	}
 
