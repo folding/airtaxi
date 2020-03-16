@@ -113,11 +113,24 @@ public:
 
 		Jsprite();
 
-		void initSprite(u8 sprnum,				//sprite index 0-127
-						unsigned char* bmpsrc,	//ptr to bmp array
-						u8 xscreen,				//x screen coord
-						u8 yscreen				//y screen coord
+		void initSprite(unsigned char* bmpsrc,	//ptr to bmp array
+						u8 fxmode,				//display sprite normal(nofx)
+						u8 palmode,				//color/palette mode
+						u8 palindex,			//palette index if mode 0
+						u8 mosaic,				//support mosaic (0 = off)
+						u8 hflip,				//horiz flip on/off
+						u8 vflip,				//vert flip on/off
+						u8 prio,				//priority(0-high, 3-low)
+						u8 dblsize,				//doublesize on/off
+						u16 xscreen,			//x screen coord
+						u16 yscreen,			//y screen coord
+						u8 height,				//sprite height
+						u8 width,				//sprite width
+						u8 numtexts,			//number of textures
+						u8 tindex				//starting texture
 						);
+
+
 
 		void changeTexture();
 
@@ -125,12 +138,9 @@ private:
 
 protected:
 
-		//array of sprites for all instances of Jsprites
+		//handle to the sprite in mem set by createObj call
 		SprAttr(8, SpriteNum)
 		
-		//this sprites index into above array
-		SprAttr(8,Index)
-
 		//sprites world location
 		Spr3DAttr(16, Loc)            	
 

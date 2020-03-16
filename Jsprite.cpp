@@ -27,54 +27,83 @@ ImpSpr3DAttr(8, Dir)
 
 ImpSprBoolAttr(Visibility)
 
-void Jsprite::initSprite(u8 sprnum,unsigned char* bmpsrc,u8 xscreen, u8 yscreen)
+void Jsprite::initSprite(unsigned char* bmpsrc,	//ptr to bmp array
+						u8 fxmode,				//display sprite normal(nofx)
+						u8 palmode,				//color/palette mode
+						u8 palindex,			//palette index if mode 0
+						u8 mosaic,				//support mosaic (0 = off)
+						u8 hflip,				//horiz flip on/off
+						u8 vflip,				//vert flip on/off
+						u8 prio,				//priority(0-high, 3-low)
+						u8 dblsize,				//doublesize on/off
+						u16 xscreen,			//x screen coord
+						u16 yscreen,			//y screen coord
+						u8 height,				//sprite height
+						u8 width,				//sprite width
+						u8 numtexts,			//number of textures
+						u8 tindex				//starting texture
+						)
 {
-	//sprites index
-	fIndex = sprnum;
-
 	//sprites location in world
-	fLoc.x = 110;  
-	fLoc.y = 50; 
+	fLoc.x = xscreen;  
+	fLoc.y = yscreen; 
 	fLoc.z = 0;
 
 	//sprite dimensions
-	fWidth = 64;
-	fHeight = 64;
+	fWidth = width;
+	fHeight = height;
 
 	//whether the sprite is visible or not
 	fVisibility = true;
 
 	//current direction		(unit velocity)
 	fDir.x = 0;
-	fDir.y = 0;
+	fDir.y = 1;
 	fDir.z = 0;
 
 	//speed sprite is travelling
 	fSpeed = 0;
 
 	//number of frames of animation
-	fFramesOfAnim = 0;
+	fFramesOfAnim = numtexts;
 
 	//current frame of animation
-	fTextureIndex = 7;
+	fTextureIndex = tindex;
 
 	fBmpArray = bmpsrc;
 
-	//sprite index for this sprite
-	//Does this mean 1-128? i think so
-	fSpriteNum = ham_CreateObj((void*)bmpsrc,//ptr to sprite
-									0,						//sprite shape
-									3,	//64x64				//sprite size
-									OBJ_MODE_NORMAL,		//display sprite normal(nofx)
-									1,	//256 pal			//color/palette mode
-									0,						//palette index if mode 0
-									0,						//support mosaic (0 = off)
-									0,						//horiz flip on/off
-									0,						//vert flip on/off
-									0,						//priority(0-high, 3-low)
-									0,						//doublesize on/off
-									xscreen,				//x screen coord
-									yscreen	);				//y screen coord
+	u8 sprShape,sprSize;
+
+	if (fHeight == fWidth)
+		sprShape = 0;
+	else if(fHeight > fWidth)
+		sprShape = 1;
+	else
+		sprShape = 2;
+
+
+	if(fHeight * fWidth < 256)
+		sprSize = 0;
+	else if(fHeight * fWidth == 256)
+		sprSize = 1;
+	else if(fHeight * fWidth > 1024)
+		sprSize = 3;
+	else
+		sprSize = 2;
+		
+	fSpriteNum = ham_CreateObj((void*)fBmpArray,			//ptr to sprite
+									sprShape,				//sprite shape (depends on size)
+									sprSize,				//sprite size
+									fxmode,					//display sprite normal(nofx)
+									palmode,				//color/palette mode
+									palindex,				//palette index if mode 0
+									mosaic,					//support mosaic (0 = off)
+									hflip,					//horiz flip on/off
+									vflip,					//vert flip on/off
+									prio,					//priority(0-high, 3-low)
+									dblsize,				//doublesize on/off
+									fLoc.x,					//x screen coord
+									fLoc.y);				//y screen coord
 
 									//me thinks the screen coords should be fixed...
 									//if map will be rotated and moving about, not sprite

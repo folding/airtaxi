@@ -4,7 +4,8 @@
 //  Filename:		JsuperCub.h
 //	Author:			John Carlson
 //	Description:	This is my class to abstract supercubs it inherits from Jsprite...
-//	
+//					It may end up as a place to hard code sprite attributes	
+//
 //	Changelog:		started 1-31-2003
 //
 
@@ -15,6 +16,8 @@ class JsuperCub : public Jsprite
 public:
 
 	JsuperCub();
+
+	void initPlane();
 
 	void RotateElevatorUp();
 	void RotateElevatorDown();

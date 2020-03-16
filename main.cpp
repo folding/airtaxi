@@ -28,13 +28,18 @@
 //					Added a few input functions to mygba.h to check for specific key combos and 
 //					others that check for only a single button being pushed.  Also mucked with the
 //					background mode to allow text display.  The background, previously bitmap, is
-//					now white with dots...
+//					now white with dots...?
 //
 //					ver.0.6
 //					Added macros for defining and implementing booleans in Jsprite class.
 //					created JsuperCub class to deal with plane specific issues...  Got rid of 
 //					silly macro warnings for trying to paste a . on the end of an value.  Cut key
 //					query back to every five frames instead of every frame.
+//
+//					ver.0.7
+//					hard coded supercub values into the JsuperCub class for simple set up of the cub
+//					extended the Jsprite.initSprite to take all possible parameters for sprite creation
+//					and other values I crammed into the Jsprite class
 
 
 
@@ -43,7 +48,7 @@
 
 //graphics includes
 #include "gfx/object.pal.c"//supercubs color palette
-#include "gfx/supercub_anim.raw.c"
+
 #include "gfx/spr.pal.c"
 #include "gfx/sprite.raw.c"
 #include "gfx/sprite.map.c"
@@ -57,10 +62,11 @@ void vblFunc();
 void query_keys();
 //void redraw_plane();
 
+//ok, this is against every thing I believe in but...
 JsuperCub plane; //this is our plane sprite.
 JsuperCub otherplane;
 
-MULTIBOOT
+//MULTIBOOT //I don't think this rom will need to be multibootable...
 
 int main(void)
 {
@@ -107,27 +113,13 @@ int main(void)
 			   0);		//turn mosaic on/off
 
 	//initialize our supercub sprite
-	plane.initSprite(0,										//sprite index number 0 - 127
-					 (unsigned char*)&supercub_anim_Bitmap,	//pointer to bmp array
-					 110,									//xscreen coord
-					 50										//yscreen coord
-					);
+	plane.initPlane();
 
-	otherplane.initSprite(1,(unsigned char*)&supercub_anim_Bitmap,10,10);
+	otherplane.initPlane();
+	otherplane.setXLoc(10);
+	otherplane.setYLoc(10);
+	ham_SetObjXY(otherplane.getSpriteNum(),10,10);
 
-	/*plane[0] = ham_CreateObj((void*)&supercub_anim_Bitmap, //ptr to sprite
-							 0,						//sprite shape
-							 3,						//sprite size
-							 OBJ_MODE_NORMAL,		//display sprite normal(nofx)
-							 1,						//color/palette mode
-							 0,						//palette index if mode 0
-							 0,						//support mosaic (0 = off)
-							 0,						//horiz flip on/off
-							 0,						//vert flip on/off
-                             0,						//priority(0-high, 3-low)
-							 0,						//doublesize on/off
-							 plane_x,				//x screen coord
-							 plane_y);				//y screen coord*/
 
 	plane.changeTexture();
 	otherplane.changeTexture();
