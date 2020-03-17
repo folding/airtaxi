@@ -37,6 +37,9 @@ void JsuperCub::initPlane()
 	fDir.y = 1;
 	fDir.z = 0;
 
+	fRotationAngle = 0;
+	fRotationSet = 0;
+
 	//speed sprite is travelling
 	fSpeed = 0;
 
@@ -62,6 +65,13 @@ void JsuperCub::initPlane()
 									fLoc.x,					//x screen coord
 									fLoc.y);				//y screen coord
 
+
+	ham_SetObjRotEnable(fSpriteNum,	   //sprite number
+						1);			   //0-off 1-on
+
+	ham_SetObjRotSetSelect(fSpriteNum,	 //sprite number
+						   fRotationSet);//which rotation set to use
+
 }
 
 void JsuperCub::DecreaseSpeed()
@@ -69,7 +79,8 @@ void JsuperCub::DecreaseSpeed()
 #ifdef TEXT_MODE_OK
 	ham_DrawText(1,18,"b and down   ");
 #endif	
-	fSpeed--;
+	if(fSpeed > 0)
+		fSpeed--;
 }
 
 void JsuperCub::IncreaseSpeed()
@@ -78,7 +89,8 @@ void JsuperCub::IncreaseSpeed()
 	ham_DrawText(1,18,"b and up     ");
 #endif
 
-	fSpeed++;
+	if(fSpeed < 10)
+		fSpeed++;
 }
 
 void JsuperCub::RotateAileronsLeft()
@@ -130,6 +142,9 @@ void JsuperCub::RotateRudderLeft()
 #ifdef TEXT_MODE_OK
 	ham_DrawText(1,18,"left only");
 #endif
+
+	rotateLeft();
+
 }
 
 void JsuperCub::RotateRudderRight()
@@ -137,4 +152,6 @@ void JsuperCub::RotateRudderRight()
 #ifdef TEXT_MODE_OK
 	ham_DrawText(1,18,"right only   ");
 #endif
+
+	rotateRight();
 }

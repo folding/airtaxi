@@ -23,10 +23,14 @@ ImpSprAttr(8, Speed)
 ImpSprAttr(8, FramesOfAnim)
 ImpSprAttr(8, TextureIndex)
 
+ImpSprAttr(16, RotationAngle)
+ImpSprAttr(8,  RotationSet)
+
 ImpSpr3DAttr(16,Loc)
 ImpSpr3DAttr(8, Dir)
 
-ImpSprBoolAttr(Visibility)
+
+
 
 void Jsprite::initSprite(unsigned char* bmpsrc,	//ptr to bmp array
 						u8 fxmode,				//display sprite normal(nofx)
@@ -42,7 +46,9 @@ void Jsprite::initSprite(unsigned char* bmpsrc,	//ptr to bmp array
 						u8 height,				//sprite height
 						u8 width,				//sprite width
 						u8 numtexts,			//number of textures
-						u8 tindex				//starting texture
+						u8 tindex,				//starting texture
+						bool rotable,			//is sprite rotateable
+						u8 rotSet				//what rotation set does it work with
 						)
 {
 	//sprites location in world
@@ -70,6 +76,9 @@ void Jsprite::initSprite(unsigned char* bmpsrc,	//ptr to bmp array
 
 	//current frame of animation
 	fTextureIndex = tindex;
+
+	fRotationAngle = 0;
+	fRotationSet = rotSet;
 
 	fBmpArray = bmpsrc;
 
@@ -109,12 +118,14 @@ void Jsprite::initSprite(unsigned char* bmpsrc,	//ptr to bmp array
 									//me thinks the screen coords should be fixed...
 									//if map will be rotated and moving about, not sprite
 
-
-	ham_SetObjRotEnable(fSpriteNum,	   //sprite number
-						1);			   //0-off 1-on
+	if(rotable == true)
+	{	
+		ham_SetObjRotEnable(fSpriteNum,	   //sprite number
+							1);			   //0-off 1-on
 	
-	ham_SetObjRotSetSelect(fSpriteNum, //sprite number
-						   0);		   //which rotation set to use
+		ham_SetObjRotSetSelect(fSpriteNum, //sprite number
+							   rotSet);	   //which rotation set to use
+	}
 
 
 	
@@ -134,9 +145,12 @@ void Jsprite::updateLocation()
 {
 	fLoc.x = fLoc.x+fDir.x*fSpeed;	//location + direction*speed
 	fLoc.y = fLoc.y+fDir.y*fSpeed;
-	ham_SetObjXY(fSpriteNum,			//this sprites handle
+	ham_SetObjXY(fSpriteNum,			//this sprites' handle
 				 fLoc.x,
 				 fLoc.y);	//location + direction*speed
+
+	ham_DrawText(10,10,"YLoc:%3d",fLoc.y);
+	ham_DrawText(10,9,"YLoc:%3d",fLoc.y%160);
 }
 
 
@@ -147,10 +161,52 @@ unsigned char* Jsprite::getBitmapArray()
 
 void Jsprite::rotateLeft()
 {
+	fRotationAngle--;
+	
+	ham_RotObjDefineSet(fRotationSet,	//rotation set (0-31)
+						fRotationAngle,	//rotation angle
+						0x100,			//x zoom
+						0x100);			//y zoom
+}
+
+void Jsprite::rotateRight()
+{
+	fRotationAngle++;
+
+	ham_RotObjDefineSet(fRotationSet,	//rotation set (0-31)
+						fRotationAngle,	//rotation angle
+						0x100,			//x zoom
+						0x100);			//y zoom
+}
+
+bool Jsprite::getVisibility()
+{
+	return fVisibility;
+}
+
+void Jsprite::enableVisibility()
+{
+	ham_SetObjVisible(  fSpriteNum, 1	);
+	fVisibility = true;
 
 }
 
+void Jsprite::disableVisibility()
+{
+	ham_SetObjVisible(  fSpriteNum, 0	);
+	fVisibility = false;
+}
 
+void Jsprite::toggleVisibility()
+{
+	if (fVisibility) {
+		disableVisibility();
+	}
+	else
+	{
+		enableVisibility();
+	}
+}
 
 
 

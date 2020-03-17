@@ -31,7 +31,7 @@
 #define MENUOPTIONFIVE 4
 
 
-
+#define TEXT_MODE_OK
 
 
 Jworld::Jworld()
@@ -170,12 +170,6 @@ void Jworld::updateWorldState()
 
 
 
-			//this is in prep for rotatable sprites...
-			ham_RotObjDefineSet(0,		//rotation set (0-31)
-								fFrames%360,//rotation angle
-								0x100,		//x zoom
-								0x100);		//y zoom
-
 		//update sprite junk...
         ham_CopyObjToOAM();
 
@@ -268,6 +262,7 @@ void Jworld::processInput()
 			ham_DrawText(1,18,"a only       ");		
 		#endif
 
+			otherplane.enableVisibility();
 
 	}
 	else if (F_CTRLINPUT_B_ONLY_PRESSED) {
@@ -275,6 +270,8 @@ void Jworld::processInput()
 		#ifdef TEXT_MODE_OK
 			ham_DrawText(1,18,"b only       ");
 		#endif
+
+			otherplane.disableVisibility();
 	}
 	else if (F_CTRLINPUT_R_ONLY_PRESSED) {
 		//rotate the plane around the y axis
@@ -293,11 +290,11 @@ void Jworld::processInput()
 		otherplane.RotateAileronsLeft();
 		fInRotation = 1;
 	}
-	else if (F_CTRLINPUT_B_AND_UP_PRESSED) {
+	else if (F_CTRLINPUT_UP_AND_B_PRESSED) {
 		//increase plane speed		
 		plane.IncreaseSpeed();
 	}
-	else if (F_CTRLINPUT_B_AND_DOWN_PRESSED) {
+	else if (F_CTRLINPUT_DOWN_AND_B_PRESSED) {
 		//decrease plane speed        
 		plane.DecreaseSpeed();
 	}

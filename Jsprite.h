@@ -127,7 +127,9 @@ public:
 						u8 height,				//sprite height
 						u8 width,				//sprite width
 						u8 numtexts,			//number of textures
-						u8 tindex				//starting texture
+						u8 tindex,				//starting texture
+						bool rotable,			//is sprite rotateable
+						u8 rotSet				//what rotation set does it work with
 						);
 
 
@@ -141,6 +143,9 @@ public:
 		void rotateLeft();
 		void rotateRight();
 
+
+		
+
 private:
 
 protected:
@@ -149,7 +154,13 @@ protected:
 		SprAttr(8, SpriteNum)
 		
 		//sprites world location
-		Spr3DAttr(16, Loc)            	
+		Spr3DAttr(16, Loc)
+
+		//sprites current rotation
+		SprAttr(16,RotationAngle)
+
+		//sprites rotation set
+		SprAttr(8,RotationSet)
 
 		//sprite dimensions
 		SprAttr(8, Width)

@@ -195,6 +195,15 @@
 			Name="gfx"
 			Filter="">
 			<File
+				RelativePath="gfx\mapgrid.map.c">
+			</File>
+			<File
+				RelativePath="gfx\mapgrid.pal.c">
+			</File>
+			<File
+				RelativePath="gfx\mapgrid.raw.c">
+			</File>
+			<File
 				RelativePath="gfx\object.pal.c">
 			</File>
 			<File

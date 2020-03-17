@@ -6,17 +6,17 @@
 //
 
 //#undef TILE_MODE_OK
-#define TILE_MODE_OK
+//#define TILE_MODE_OK
 
 #include "Jmap.h"
 
-#ifdef TILE_MODE_OK
+//#ifdef TILE_MODE_OK
 	#include "gfx/mapgrid.raw.c"
 	#include "gfx/mapgrid.map.c"
-#else
-	#include "gfx/sprt.raw.c"
-	//#include "gfx/maptest.raw.c"
-#endif
+/*#else
+#include "gfx/sprt.raw.c"
+//#include "gfx/maptest.raw.c"
+#endif*/
 
 
 
@@ -28,7 +28,7 @@ Jmap::Jmap()
 
 void Jmap::initMap()
 {
-#ifdef TILE_MODE_OK
+
 	map_fragment_info_ptr  bg_pic; //map pointer
 
 
@@ -37,37 +37,25 @@ void Jmap::initMap()
 									1,							//color/palette mode
 									1);							//offset or not...
 
-	ham_bg[2].mi = ham_InitMapEmptySet(3,				//map size				
-										1);				//rotatable (0 = no)
+	ham_bg[2].mi = ham_InitMapEmptySet(1,	//256x256	//map size				
+									   1);				//rotatable (0 = no)
 
 	fMapX = 512;
 	fMapY = 512;
 
 	bg_pic = ham_InitMapFragment((void*)&mapgrid_Map,	//ptr to source
-									64,					//map x size in tiles
-									64,					//map y size in tiles
-									20,					//x offset in tiles
-									30,					//y offset in tiles
-									8,					//num tiles in x direct
-									8,					//num tiles in y direct
+									32,					//map x size in tiles
+									32,					//map y size in tiles
+									0,					//x offset in tiles
+									0,					//y offset in tiles
+									32,					//num tiles in x direct
+									32,					//num tiles in y direct
 									1);					//rotatable (0 = no)
 
 	ham_InsertMapFragment(bg_pic,		//map fragment ptr
 							2,			//background number
 							0,			//x tilenumber to place frag
 							0);			//y tilenumber..
-
-#else 
-
-	//this is set up for mode 4 one big bitmap.
-	TOOL_DMA3_SET(&sprt_Bitmap,				//source address
-				  MEM_BG_PTR,				//destination address
-				  SIZEOF_32BIT(sprt_Bitmap),//size
-				  DMA_TRANSFER_32BIT,		//mode
-				  DMA_STARTAT_NOW)			//timing
-
-
-#endif
 
 }
 

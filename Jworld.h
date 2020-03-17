@@ -27,20 +27,33 @@ public:
 protected:
 
 private:
-		JsuperCub plane; //this is our plane sprite.
+		//these are the world bounds
+		u16		xbound;
+		u16		ybound;
+	
+		//this is our plane sprite.
+		JsuperCub plane; 
+				
+		//this is other objects in the world
 		JsuperCub otherplane;
 
+        //this is the background
 		Jmap fMap;
 
+		//total number of frames thus far
 		u32 fFrames;
 
+		//is the plane been rotated
 		u8 fInRotation;
 
+		//the various menus
 		Jmenu fMainMenu;
 		Jmenu fPauseMenu;
 
+		//the missions
 		Jmission fMissionOne;
 
+		//variables to track transition from menu to game
 		u8 fWhereIWas;
 		u8 fWhereIAm;
 
