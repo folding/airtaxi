@@ -5,14 +5,14 @@
 //	Changelog:		started 2-1-2003
 //
 
-//#define TILE_MODE_OK
-#undef TILE_MODE_OK
+//#undef TILE_MODE_OK
+#define TILE_MODE_OK
 
 #include "Jmap.h"
 
 #ifdef TILE_MODE_OK
-	#include "gfx/sprite.raw.c"
-	#include "gfx/sprite.map.c"
+	#include "gfx/mapgrid.raw.c"
+	#include "gfx/mapgrid.map.c"
 #else
 	#include "gfx/sprt.raw.c"
 	//#include "gfx/maptest.raw.c"
@@ -29,33 +29,33 @@ Jmap::Jmap()
 void Jmap::initMap()
 {
 #ifdef TILE_MODE_OK
-/*	map_fragment_info_ptr  bg_pic; //map pointer
+	map_fragment_info_ptr  bg_pic; //map pointer
 
 
-	ham_bg[1].ti = ham_InitTileSet((void*)&sprite_Tiles,		//ptr to source
-									SIZEOF_16BIT(sprite_Tiles),	//number of 16bit chunks
+	ham_bg[2].ti = ham_InitTileSet((void*)&mapgrid_Tiles,		//ptr to source
+									SIZEOF_16BIT(mapgrid_Tiles),//number of 16bit chunks
 									1,							//color/palette mode
 									1);							//offset or not...
 
-	ham_bg[1].mi = ham_InitMapEmptySet(3,				//map size				
-										0);				//rotatable (0 = no)
+	ham_bg[2].mi = ham_InitMapEmptySet(3,				//map size				
+										1);				//rotatable (0 = no)
 
-	fMapX = 30;
-	fMapY = 20;
+	fMapX = 512;
+	fMapY = 512;
 
-	bg_pic = ham_InitMapFragment((void*)&sprite_Map,	//ptr to source
-									fMapX,				//map x size
-									fMapY,				//map y size
-									0,					//x offset
-									0,					//y offset
-									1,					//num tiles in x direct
-									1,					//num tiles in y direct
-									0);					//rotatable (0 = no)
+	bg_pic = ham_InitMapFragment((void*)&mapgrid_Map,	//ptr to source
+									64,					//map x size in tiles
+									64,					//map y size in tiles
+									20,					//x offset in tiles
+									30,					//y offset in tiles
+									8,					//num tiles in x direct
+									8,					//num tiles in y direct
+									1);					//rotatable (0 = no)
 
 	ham_InsertMapFragment(bg_pic,		//map fragment ptr
-							0,			//background number
+							2,			//background number
 							0,			//x tilenumber to place frag
-							0);			//y tilenumber..*/
+							0);			//y tilenumber..
 
 #else 
 

@@ -68,6 +68,12 @@
 //					attempted to do a big background but it appears the maxsize allowable in mode 4 is
 //					240x160... that won't work well for what I had intended to implement.  I have now
 //					attempted to rotate sprites just to see how ham does this. it hasn't worked yet.
+//
+//					ver.1.3
+//					hmm, just found that tile mode 1 and 2 are actually rotatable.  So I am in the
+//					process of converting back to mode 1 (ha ha ha)  Alright, it now rotate a background
+//					in mode one.  I still don't have complete understanding of graphics but it looks
+//					like my original implementation idea still is possible.
 
 
 #include "Jworld.h"

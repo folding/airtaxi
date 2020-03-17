@@ -8,8 +8,9 @@
 #include "JsuperCub.h"
 #include "gfx/supercub_anim.raw.c"
 
-//#define TEXT_MODE_OK
-#undef TEXT_MODE_OK
+//#undef TEXT_MODE_OK
+#define TEXT_MODE_OK
+
 
 JsuperCub::JsuperCub()
 {

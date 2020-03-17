@@ -1,0 +1,3 @@
+for tile mode.
+
+gfx2gba -fsrc -m -p[palette name].pal -t8 [bitmap].bmp

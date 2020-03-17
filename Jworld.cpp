@@ -8,7 +8,7 @@
 //graphics includes
 #include "gfx/object.pal.c"//supercubs color palette
 //#include "gfx/spr.pal.c"//background palette
-#include "gfx/sprt.pal.c"//mode 4 background
+#include "gfx/mapgrid.pal.c"//mode 4 background
 //#include "gfx/maptest.pal.c"
 
 
@@ -31,6 +31,9 @@
 #define MENUOPTIONFIVE 4
 
 
+
+
+
 Jworld::Jworld()
 {
 	fWhereIAm = INGAME;
@@ -44,10 +47,10 @@ void Jworld::initWorld()
 {
 	ham_Init();
 
-	ham_SetBgMode(4);	//set background mode to one
+	ham_SetBgMode(1);	//set background mode to one
 
 	//this is the backgrounds palette 
-	ham_LoadBGPal256((void*)&sprt_Palette);	
+	ham_LoadBGPal256((void*)&mapgrid_Palette);	
 
 	//do this one for tile modes
 	//ham_LoadBGPal256((void*)&spr_Palette);	
@@ -65,10 +68,10 @@ void Jworld::initWorld()
 
 
 	//Display the background
-	/*ham_InitBg(1,		//background number
-				1,		//turn bg on/off (1 = on)
-				0,		//set priority (0-high,3-low)
-				0);		//turn mosaic on/off*/
+	ham_InitBg(2,		//background number
+			   1,		//turn bg on/off (1 = on)
+			   0,		//set priority (0-high,3-low)
+			   0);		//turn mosaic on/off
 
 
 	//initialize our supercub sprites
@@ -157,8 +160,8 @@ void Jworld::updateWorldState()
 		//maybe put this into map class...
 		ham_RotBg(2,							//background number
 				  fMap.GetRot(),				//angle
-				  plane.getXLoc(),				//x center of rotation		//xloc yloc are upper left corner of sprite.... should find center of plane instead....
-				  plane.getYLoc(),				//y center of rotation
+				  120,//plane.getXLoc(),				//x center of rotation		//xloc yloc are upper left corner of sprite.... should find center of plane instead....
+				  80,//plane.getYLoc(),				//y center of rotation
 				  0x100+(SIN_SFP32[fMap.GetZoom()])	//zoom factor
 				  );
 
@@ -207,7 +210,7 @@ void Jworld::updateWorldState()
 			fWhereIAm = INGAME;
 		else if(fMenuDecision == MENUOPTIONTWO)//exit to mainmenu
 			fWhereIAm = INMAINMENU;
-		else if(fMenuDecision == MENUOPTIONTHREE)
+		else if(fMenuDecision == MENUOPTIONTHREE)//restart mission...
 		{}
 		else if(fMenuDecision == MENUOPTIONFOUR)
 		{}
